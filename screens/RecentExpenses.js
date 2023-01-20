@@ -1,17 +1,8 @@
-import {Text, View, StyleSheet} from 'react-native'
-import { GlobalStyles } from '../constants/styles'
+import ExpensesOutput from '../components/ExpensesOutput/ExpensesOutput'
 
-export default function RecentExpenses() {
+export default function RecentExpenses({title, }) {
   return (
-    <View style={styles.container}>
-      <Text>Recent Expense Page</Text>
-    </View>
+    <ExpensesOutput expensesPeriod={'Last 7 Days ...'} expenses={'$140.99'}/>
   )
 }
 
-const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: GlobalStyles.colors.primary700,
-  }
-})
