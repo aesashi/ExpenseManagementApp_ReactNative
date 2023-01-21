@@ -11,7 +11,6 @@ export default function ExpensesItem({id, description, amount, date }) {
       expenseId: id,
     })
   }
-
   return (
     <View>
     <Pressable
