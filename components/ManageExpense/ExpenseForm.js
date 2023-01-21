@@ -3,10 +3,28 @@ import { GlobalStyles } from '../../constants/styles';
 import Input from './Input';
 import CustomButton from '../UI/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-
-export default function ExpenseForm({submitButtonLabel, onCancel, onPress}) {
+import { useState } from 'react';
+export default function ExpenseForm({submitButtonLabel, onCancel, onSubmit}) {
+  const [inputs, setInputs] = useState({
+    amount: '',
+    date: '',
+    description: ''
+  })
   const navigation = useNavigation();
 
+  function submissionHandler(){
+    onSubmit(inputs)
+  }
+
+  function inputChangedHandler(inputIdentifier, enteredValue){
+    setInputs((curInputs) => {
+      return{
+        ...curInputs,
+        [inputIdentifier]: enteredValue
+
+      }
+    })
+  }
   return (
     <View style={styles.rootContainer}>
         <Text style={styles.titleText}>Your Expense</Text>
@@ -16,6 +34,8 @@ export default function ExpenseForm({submitButtonLabel, onCancel, onPress}) {
           style={styles.inputBox}
           textInputConfig={{
             keyboardType: 'decimal-pad',
+            onChangeText: inputChangedHandler.bind(this, 'amount'),
+            value: inputs.amount,
           }}
         />
         <Input
@@ -24,6 +44,8 @@ export default function ExpenseForm({submitButtonLabel, onCancel, onPress}) {
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
+            onChangeText: inputChangedHandler.bind(this, 'date'),
+            value: inputs.date,
           }}
         />
         </View>
@@ -31,6 +53,8 @@ export default function ExpenseForm({submitButtonLabel, onCancel, onPress}) {
           label={'Description'}
           textInputConfig={{
             multiline: true,
+            onChangeText: inputChangedHandler.bind(this, 'description'),
+            value: inputs.description,
           }}
         />
         <View style={styles.buttons}>
@@ -41,7 +65,7 @@ export default function ExpenseForm({submitButtonLabel, onCancel, onPress}) {
           />
           <CustomButton
             style={styles.button}
-            onPress={()=>{}}
+            onPress={submissionHandler}
             children={submitButtonLabel}
           />
         </View>

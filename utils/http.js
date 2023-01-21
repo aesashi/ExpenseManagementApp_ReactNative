@@ -1,20 +1,19 @@
-import ExpensesList from "../components/ExpensesOutput/ExpensesList";
-import axios from axios;
-
-const BACKEND_URL = 'https://expenseapp-rn-default-rtdb.firebaseio.com';
+import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 
-function storeExpense(expenseData) {
-  const reaponse = axios.post(BACKEND_URL + '/expense.json', expenseData);
-}
-
+  export async function storeExpense(expenseData) {
+    const response = await axios.post(BACKEND_URL + '/expenses.json', expenseData);
+    const id = response.data.name;
+    return id;
+  }
 
 export async function fetchExpenses() {
   const response = await axios.get(BACKEND_URL + '/expenses.json');
 
   const expenses = [];
 
-  for (const key in response.data){
+  for (const key in response.data) {
     const expenseObj = {
       id: key,
       amount: response.data[key].amount,

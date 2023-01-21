@@ -7,7 +7,7 @@ export default function ExpensesOutput({expensesPeriod, expenses}) {
   return (
     <View style={styles.rootContainer}>
       <ExpensesSummary expensesPeriod={expensesPeriod} expenses={expenses} />
-      <ExpensesList />
+      <ExpensesList expenses={expenses} />
     </View>
   )
 }

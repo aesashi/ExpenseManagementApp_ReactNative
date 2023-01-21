@@ -1,10 +1,9 @@
 import {Text, View, StyleSheet, TextInput, Button} from 'react-native';
 import { GlobalStyles } from '../constants/styles';
-import Input from '../components/ManageExpense/Input';
 import ExpenseForm from '../components/ManageExpense/ExpenseForm';
 import { useContext, useLayoutEffect } from 'react';
 import { ExpensesContext } from '../store/expenses-context';
-
+import {storeExpense} from '../utils/http'
 
 export default function ManageExpense({route, navigation}) {
   const editedExpense = route.params?.expenseId;
@@ -17,11 +16,12 @@ export default function ManageExpense({route, navigation}) {
     });
   }, [navigation]);
 
-  // async function confirmHandler(expenseData){
-  //   if (isEditing){
-  //     expensesCtx.update
-  //   }
-  // }
+  async function confirmHandler(expenseData){
+    const id = await storeExpense(expenseData);
+    expensesCtx.addExpense({ ...expenseData, id: id });
+    navigation.goBack();
+
+  }
 
   function cancelHandler(){
     navigation.goBack();
@@ -30,7 +30,7 @@ export default function ManageExpense({route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <ExpenseForm onCancel={cancelHandler} submitButtonLabel={isEditing ? 'Update' : 'Add'} />
+      <ExpenseForm onSubmit={confirmHandler} onCancel={cancelHandler} submitButtonLabel={isEditing ? 'Update' : 'Add'} />
     </View>
   )
 }

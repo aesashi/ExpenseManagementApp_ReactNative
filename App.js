@@ -9,6 +9,7 @@ import ManageExpense from './screens/ManageExpense';
 import AllExpenses from './screens/AllExpenses';
 import { GlobalStyles } from './constants/styles';
 import IconButton from './components/UI/IconButton';
+import ExpensesConxtextProvider from './store/expenses-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,6 +58,7 @@ function ExpenseTabs() {
 
 export default function App() {
   return (
+    <ExpensesConxtextProvider>
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -80,5 +82,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </ExpensesConxtextProvider>
   );
 }
