@@ -4,11 +4,9 @@ import Input from './Input';
 import CustomButton from '../UI/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 
-export default function ExpenseForm({submitButtonLabel}) {
+export default function ExpenseForm({submitButtonLabel, onCancel, onPress}) {
   const navigation = useNavigation();
-  function cancelHandler(){
-    navigation.goBack();
-  }
+
   return (
     <View style={styles.rootContainer}>
         <Text style={styles.titleText}>Your Expense</Text>
@@ -38,7 +36,7 @@ export default function ExpenseForm({submitButtonLabel}) {
         <View style={styles.buttons}>
           <CustomButton
             style={styles.button}
-            onPress={cancelHandler}
+            onPress={onCancel}
             children="Cencel"
           />
           <CustomButton

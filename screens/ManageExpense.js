@@ -2,12 +2,14 @@ import {Text, View, StyleSheet, TextInput, Button} from 'react-native';
 import { GlobalStyles } from '../constants/styles';
 import Input from '../components/ManageExpense/Input';
 import ExpenseForm from '../components/ManageExpense/ExpenseForm';
-import { useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect } from 'react';
+import { ExpensesContext } from '../store/expenses-context';
 
 
 export default function ManageExpense({route, navigation}) {
   const editedExpense = route.params?.expenseId;
   const isEditing = !!editedExpense
+  const expensesCtx = useContext(ExpensesContext);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -15,9 +17,20 @@ export default function ManageExpense({route, navigation}) {
     });
   }, [navigation]);
 
+  // async function confirmHandler(expenseData){
+  //   if (isEditing){
+  //     expensesCtx.update
+  //   }
+  // }
+
+  function cancelHandler(){
+    navigation.goBack();
+  }
+
+
   return (
     <View style={styles.container}>
-      <ExpenseForm submitButtonLabel={isEditing ? 'Update' : 'Add'} />
+      <ExpenseForm onCancel={cancelHandler} submitButtonLabel={isEditing ? 'Update' : 'Add'} />
     </View>
   )
 }
